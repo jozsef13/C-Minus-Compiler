@@ -10,6 +10,7 @@ IS			(u|U|l|L)*
 #include "symbols.h"
 
 void count();
+void error();
 %}
 
 %%
@@ -45,7 +46,7 @@ void count();
 "}"         { count(); return(RIGHT_BRACE); }
 
 [ \t\v\n\f]		{ count(); }
-.			{ /* ignore bad characters */ }
+.			{ error(); }
 
 %%
 
@@ -88,4 +89,9 @@ void count()
 			column++;
 
 	ECHO;
+}
+
+void error()
+{
+	printf("Error! The string %s is not recognized!", yytext);
 }
