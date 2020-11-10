@@ -477,7 +477,7 @@ char *yytext;
 #line 1 "C-Minus.lex"
 #line 9 "C-Minus.lex"
 #include <stdio.h>
-#include "symbols.h"
+#include "C-Minus.tab.h"
 
 void count();
 void error();

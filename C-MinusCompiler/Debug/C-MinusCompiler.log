@@ -1,5 +1,2 @@
-﻿  lex.yy.c
-C-Minus.lex(17,10): warning C4013: 'comment' undefined; assuming extern returning int
-lex.yy.c(1498,46): warning C4013: 'isatty' undefined; assuming extern returning int
-D:\Documents\AUTOMATICA\Anul IV\Semestrul I\Translator Design\Lab\C-MinusCompiler\C-MinusCompiler\C-Minus.lex(75): warning C4716: 'comment': must return a value
+﻿  C-MinusCompiler.c
   C-MinusCompiler.vcxproj -> D:\Documents\AUTOMATICA\Anul IV\Semestrul I\Translator Design\Lab\C-MinusCompiler\Debug\C-MinusCompiler.exe
