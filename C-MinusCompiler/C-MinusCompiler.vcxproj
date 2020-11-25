@@ -147,11 +147,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ast.c" />
     <ClCompile Include="C-Minus.tab.c" />
     <ClCompile Include="C-MinusCompiler.c" />
     <ClCompile Include="lex.yy.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ast.h" />
     <ClInclude Include="C-Minus.tab.h" />
   </ItemGroup>
   <ItemGroup>

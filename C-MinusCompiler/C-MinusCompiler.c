@@ -1,71 +1,40 @@
 #include <stdio.h>
-#include "symbols.h"
-#include <errno.h>
+#include "ast.h"
 
-extern FILE* yyin;
-//extern int yylex(void);
 extern int yyparse(void);
+extern FILE* yyin;
 extern int yydebug;
-//const char* lexUnits[] = {
-//	"END",
-//	"ELSE",
-//	"IF",
-//	"INT",
-//	"LONG",
-//	"DOUBLE",
-//	"FLOAT",
-//	"SHORT",
-//	"UNSIGNED",
-//	"VOLATILE",
-//	"RETURN",
-//	"VOID",
-//	"WHILE",
-//	"ADD",
-//	"SUBSTRACT",
-//	"MULTIPLY",
-//	"DIVIDE",
-//	"SMALLER",
-//	"SMALLER_OR_EQUAL",
-//	"GREATER",
-//	"GREATER_OR_EQUAL",
-//	"EQUAL",
-//	"NOT_EQUAL",
-//	"ASSIGN",
-//	"END_OF_INSTRUCTION",
-//	"COMMA",
-//	"LEFT_PARANTHESIS",
-//	"RIGHT_PARANTHESIS",
-//	"LEFT_BRACKET",
-//	"RIGHT_BRACKET",
-//	"LEFT_BRACE",
-//	"RIGHT_BRACE",
-//	"ID",
-//	"NUM"
-//};
+extern Node* astRoot;
 
 int main()
 {
 	//yydebug = 1;
 	yyin = fopen("input.csrc", "rt");
-	if (yyin != NULL) {
+	if (yyin != NULL)
+	{
 		int result = yyparse();
 		switch (result)
 		{
 		case 0:
-			printf("\nParse Successfull\n");
+			printf("Parse successfull.\n");
 			break;
+
 		case 1:
-			printf("\nInvalid input encountered!\n");
+			printf("Invalid input encountered\n");
 			break;
+
 		case 2:
-			printf("Out of memory!");
+			printf("Out of memory\n");
 			break;
+
 		default:
 			break;
 		}
+		printAst(astRoot, 0);
 		fclose(yyin);
 	}
-	else {
+	else
+	{
 		printf("Fisier inexistent");
 	}
 }

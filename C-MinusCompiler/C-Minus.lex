@@ -8,6 +8,7 @@ IS			(u|U|l|L)*
 %{
 #include <stdio.h>
 #include "C-Minus.tab.h"
+#include "ast.h"
 
 void count();
 void error();
@@ -22,8 +23,8 @@ void error();
 "void"      { count(); return(VOID); }
 "while"     { count(); return(WHILE); }
 
-{L}({L}|{D})*		{ count(); return(ID); }
-{D}+                { count(); return(NUM); }
+{L}({L}|{D})*		{ count(); yylval.strings = strdup(yytext);  return(ID); }
+{D}+                { count(); yylval.intVal = atoi(yytext); return(NUM); }
 
 "+"			{ count(); return(ADD); }
 "-"			{ count(); return(SUBSTRACT); }

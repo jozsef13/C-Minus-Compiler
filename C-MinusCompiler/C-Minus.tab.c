@@ -70,10 +70,13 @@
 #line 1 "C-Minus.y"
  
   #include <stdio.h>
+  #include "ast.h"
+
+  Node* astRoot = NULL;
   int yyerror(char * s);
   extern int yylex(void);
 
-#line 77 "C-Minus.tab.c"
+#line 80 "C-Minus.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -477,7 +480,7 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  9
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   97
+#define YYLAST   100
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  37
@@ -486,7 +489,7 @@ union yyalloc
 /* YYNRULES -- Number of rules.  */
 #define YYNRULES  63
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  103
+#define YYNSTATES  102
 
 /* YYMAXUTOK -- Last valid token kind.  */
 #define YYMAXUTOK   291
@@ -539,13 +542,13 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    46,    46,    50,    51,    55,    56,    60,    61,    65,
-      66,    70,    74,    75,    79,    80,    84,    85,    89,    93,
-      94,    98,    99,   103,   104,   105,   106,   107,   111,   112,
-     116,   117,   121,   125,   126,   130,   131,   135,   136,   140,
-     141,   145,   146,   147,   148,   149,   150,   154,   155,   159,
-     160,   164,   165,   169,   170,   174,   175,   176,   177,   181,
-     185,   186,   190,   191
+       0,    83,    83,    87,    88,    92,    93,    97,    98,   102,
+     103,   107,   111,   112,   116,   117,   121,   122,   126,   130,
+     131,   135,   136,   140,   141,   142,   143,   144,   148,   149,
+     153,   154,   158,   162,   163,   167,   168,   172,   173,   177,
+     178,   182,   183,   184,   185,   186,   187,   191,   192,   196,
+     197,   201,   202,   206,   207,   211,   212,   213,   214,   218,
+     222,   223,   227,   228
 };
 #endif
 
@@ -595,7 +598,7 @@ static const yytype_int16 yytoknum[] =
 };
 #endif
 
-#define YYPACT_NINF (-88)
+#define YYPACT_NINF (-87)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -609,17 +612,17 @@ static const yytype_int16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -2,   -88,   -88,     2,    -2,   -88,   -88,   -26,   -88,   -88,
-     -88,    11,   -88,    25,   -18,    -9,   -11,     7,    15,   -88,
-      19,    23,    24,    -2,    44,    43,   -88,   -88,   -88,    50,
-     -88,    -2,   -88,   -88,    45,     0,    18,    47,   -19,    52,
-     -88,    12,   -88,    41,   -88,   -88,   -88,   -88,   -88,   -88,
-     -88,    51,    53,   -88,    39,    49,   -88,   -88,    12,   -88,
-      55,    12,    54,    12,    12,   -88,    12,   -88,   -88,   -88,
-     -88,   -88,   -88,   -88,   -88,    12,    12,   -88,   -88,    12,
-      56,   -88,    58,   -88,   -88,    59,    62,    60,   -88,   -88,
-      57,    49,   -88,    17,    17,   -88,    12,   -88,    79,   -88,
-     -88,    17,   -88
+      -2,   -87,   -87,     2,    -2,   -87,   -87,   -26,   -87,   -87,
+     -87,    11,   -87,    25,   -18,    -6,   -14,     7,    15,   -87,
+      19,    23,    24,    -2,    44,    43,   -87,   -87,   -87,   -87,
+     -87,    -2,   -87,    42,     0,    18,    47,   -19,    50,   -87,
+      12,   -87,    41,   -87,   -87,   -87,   -87,   -87,   -87,   -87,
+      51,    54,   -87,    39,    49,   -87,   -87,    12,   -87,    55,
+      12,    53,    12,    12,   -87,    12,   -87,   -87,   -87,   -87,
+     -87,   -87,   -87,   -87,    12,    12,   -87,   -87,    12,    56,
+     -87,    58,   -87,   -87,    59,    62,    52,   -87,   -87,    57,
+      49,   -87,    17,    17,   -87,    12,   -87,    77,   -87,   -87,
+      17,   -87
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -629,31 +632,31 @@ static const yytype_int8 yydefact[] =
 {
        0,     9,    10,     0,     2,     4,     5,     0,     6,     1,
        3,     0,     7,     0,     0,    10,     0,     0,    12,    15,
-       0,    16,     0,     0,     0,     0,    20,    11,    14,     0,
-      17,    22,     8,    19,     0,     0,     0,     0,     0,     0,
-      29,     0,    18,    37,    58,    24,    21,    23,    25,    26,
-      27,     0,    56,    36,    40,    48,    52,    57,     0,    33,
-       0,     0,     0,    61,     0,    28,     0,    49,    50,    42,
-      41,    43,    44,    45,    46,     0,     0,    53,    54,     0,
-       0,    34,     0,    55,    63,     0,    60,     0,    35,    56,
-      39,    47,    51,     0,     0,    59,     0,    38,    30,    32,
-      62,     0,    31
+       0,    16,     0,     0,     0,     0,    20,    11,    14,     8,
+      17,    22,    19,     0,     0,     0,     0,     0,     0,    29,
+       0,    18,    37,    58,    24,    21,    23,    25,    26,    27,
+       0,    56,    36,    40,    48,    52,    57,     0,    33,     0,
+       0,     0,    61,     0,    28,     0,    49,    50,    42,    41,
+      43,    44,    45,    46,     0,     0,    53,    54,     0,     0,
+      34,     0,    55,    63,     0,    60,     0,    35,    56,    39,
+      47,    51,     0,     0,    59,     0,    38,    30,    32,    62,
+       0,    31
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -88,   -88,   -88,    81,    63,   -12,   -88,   -88,   -88,    64,
-      69,   -88,   -88,   -87,   -88,   -88,   -88,   -88,   -38,   -10,
-     -88,   -88,    20,   -88,    21,   -88,    14,   -88,   -88,   -88
+     -87,   -87,   -87,    81,    60,   -12,   -87,   -87,   -87,    64,
+      70,   -87,   -87,   -86,   -87,   -87,   -87,   -87,   -37,    -9,
+     -87,   -87,    20,   -87,    21,   -87,    22,   -87,   -87,   -87
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
       -1,     3,     4,     5,     6,     7,     8,    17,    18,    19,
-      45,    31,    35,    46,    47,    48,    49,    50,    51,    52,
-      53,    75,    54,    76,    55,    79,    56,    57,    85,    86
+      44,    31,    34,    45,    46,    47,    48,    49,    50,    51,
+      52,    74,    53,    75,    54,    78,    55,    56,    84,    85
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -661,30 +664,32 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-      60,    16,     9,    62,     1,    37,    98,    99,    59,    11,
-      41,    16,     2,    38,   102,    39,    43,    44,    20,    34,
-      80,   -13,    37,    82,    21,    84,    87,    40,    88,    41,
-      38,     1,    39,    26,    42,    43,    44,    22,    12,    15,
-      13,    41,    14,    23,    40,    12,    41,    43,    44,    14,
-      26,    24,    43,    44,    25,    67,    68,    26,   100,    69,
-      70,    71,    72,    73,    74,    89,    89,    77,    78,    89,
-      63,    29,    64,    67,    68,    30,    58,    32,    65,    66,
-      36,    61,    81,   101,    83,    10,    93,    28,    94,    95,
-      96,    27,    97,    92,    33,    90,     0,    91
+      59,    16,     9,    61,     1,    36,    97,    98,    58,    11,
+      40,    16,     2,    37,   101,    38,    42,    43,    20,    33,
+      79,    21,    36,    81,   -13,    83,    86,    39,    87,    40,
+      37,     1,    38,    26,    41,    42,    43,    22,    12,    15,
+      13,    40,    14,    23,    39,    12,    40,    42,    43,    14,
+      26,    24,    42,    43,    25,    66,    67,    26,    99,    68,
+      69,    70,    71,    72,    73,    88,    88,    76,    77,    88,
+      62,    29,    63,    66,    67,    30,    57,    35,    64,    60,
+      65,   100,    80,    82,    96,    10,    92,    28,    93,    94,
+      95,    32,    27,     0,    89,     0,    90,     0,     0,     0,
+      91
 };
 
 static const yytype_int8 yycheck[] =
 {
-      38,    13,     0,    41,     6,     5,    93,    94,    27,    35,
-      29,    23,    14,    13,   101,    15,    35,    36,    36,    31,
-      58,    30,     5,    61,    35,    63,    64,    27,    66,    29,
+      37,    13,     0,    40,     6,     5,    92,    93,    27,    35,
+      29,    23,    14,    13,   100,    15,    35,    36,    36,    31,
+      57,    35,     5,    60,    30,    62,    63,    27,    65,    29,
       13,     6,    15,    33,    34,    35,    36,    30,    27,    14,
       29,    29,    31,    28,    27,    27,    29,    35,    36,    31,
-      33,    32,    35,    36,    31,    16,    17,    33,    96,    20,
-      21,    22,    23,    24,    25,    75,    76,    18,    19,    79,
-      29,    27,    31,    16,    17,    32,    29,    27,    27,    26,
-      35,    29,    27,     4,    30,     4,    30,    23,    30,    30,
-      28,    22,    32,    79,    31,    75,    -1,    76
+      33,    32,    35,    36,    31,    16,    17,    33,    95,    20,
+      21,    22,    23,    24,    25,    74,    75,    18,    19,    78,
+      29,    27,    31,    16,    17,    32,    29,    35,    27,    29,
+      26,     4,    27,    30,    32,     4,    30,    23,    30,    30,
+      28,    31,    22,    -1,    74,    -1,    75,    -1,    -1,    -1,
+      78
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
@@ -694,14 +699,14 @@ static const yytype_int8 yystos[] =
        0,     6,    14,    38,    39,    40,    41,    42,    43,     0,
       40,    35,    27,    29,    31,    14,    42,    44,    45,    46,
       36,    35,    30,    28,    32,    31,    33,    47,    46,    27,
-      32,    48,    27,    41,    42,    49,    35,     5,    13,    15,
-      27,    29,    34,    35,    36,    47,    50,    51,    52,    53,
-      54,    55,    56,    57,    59,    61,    63,    64,    29,    27,
-      55,    29,    55,    29,    31,    27,    26,    16,    17,    20,
-      21,    22,    23,    24,    25,    58,    60,    18,    19,    62,
-      55,    27,    55,    30,    55,    65,    66,    55,    55,    56,
-      59,    61,    63,    30,    30,    30,    28,    32,    50,    50,
-      55,     4,    50
+      32,    48,    41,    42,    49,    35,     5,    13,    15,    27,
+      29,    34,    35,    36,    47,    50,    51,    52,    53,    54,
+      55,    56,    57,    59,    61,    63,    64,    29,    27,    55,
+      29,    55,    29,    31,    27,    26,    16,    17,    20,    21,
+      22,    23,    24,    25,    58,    60,    18,    19,    62,    55,
+      27,    55,    30,    55,    65,    66,    55,    55,    56,    59,
+      61,    63,    30,    30,    30,    28,    32,    50,    50,    55,
+       4,    50
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
@@ -719,7 +724,7 @@ static const yytype_int8 yyr1[] =
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     1,     2,     1,     1,     1,     3,     7,     1,
+       0,     2,     1,     2,     1,     1,     1,     3,     6,     1,
        1,     6,     1,     1,     3,     1,     2,     4,     4,     2,
        0,     2,     0,     1,     1,     1,     1,     1,     2,     1,
        5,     7,     5,     2,     3,     3,     1,     1,     4,     3,
@@ -1192,8 +1197,362 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
+  case 2: /* program: declaration_list  */
+#line 83 "C-Minus.y"
+                       { (yyval.node) = createProgramNode((yyvsp[0].node)); astRoot = (yyval.node); }
+#line 1204 "C-Minus.tab.c"
+    break;
 
-#line 1197 "C-Minus.tab.c"
+  case 3: /* declaration_list: declaration_list declaration  */
+#line 87 "C-Minus.y"
+                                   { (yyval.node) = (yyvsp[-1].node); addLinkToList((yyval.node), (yyvsp[0].node)); }
+#line 1210 "C-Minus.tab.c"
+    break;
+
+  case 4: /* declaration_list: declaration  */
+#line 88 "C-Minus.y"
+                  { (yyval.node) = createListNode("DeclarationsList", (yyvsp[0].node)); }
+#line 1216 "C-Minus.tab.c"
+    break;
+
+  case 5: /* declaration: var_declaration  */
+#line 92 "C-Minus.y"
+                      { (yyval.node) = createDeclarationNode((yyvsp[0].node)); }
+#line 1222 "C-Minus.tab.c"
+    break;
+
+  case 6: /* declaration: fun_declaration  */
+#line 93 "C-Minus.y"
+                      { (yyval.node) = createDeclarationNode((yyvsp[0].node)); }
+#line 1228 "C-Minus.tab.c"
+    break;
+
+  case 7: /* var_declaration: type_specifier ID END_OF_INSTRUCTION  */
+#line 97 "C-Minus.y"
+                                           { (yyval.node) = createVarDeclaration((yyvsp[-2].node), (yyvsp[-1].strings), 0); }
+#line 1234 "C-Minus.tab.c"
+    break;
+
+  case 8: /* var_declaration: type_specifier ID LEFT_BRACKET NUM RIGHT_BRACKET END_OF_INSTRUCTION  */
+#line 98 "C-Minus.y"
+                                                                          { (yyval.node) = createVarDeclaration((yyvsp[-5].node), (yyvsp[-4].strings), (yyvsp[-2].intVal)); }
+#line 1240 "C-Minus.tab.c"
+    break;
+
+  case 9: /* type_specifier: INT  */
+#line 102 "C-Minus.y"
+          { (yyval.node) = createTypeSpecifier("INT"); }
+#line 1246 "C-Minus.tab.c"
+    break;
+
+  case 10: /* type_specifier: VOID  */
+#line 103 "C-Minus.y"
+           { (yyval.node) = createTypeSpecifier("VOID"); }
+#line 1252 "C-Minus.tab.c"
+    break;
+
+  case 11: /* fun_declaration: type_specifier ID LEFT_PARANTHESIS params RIGHT_PARANTHESIS compound_stmt  */
+#line 107 "C-Minus.y"
+                                                                                { (yyval.node) = createFunctionDeclarationNode((yyvsp[-5].node), (yyvsp[-4].strings), (yyvsp[-2].node), (yyvsp[0].node)); }
+#line 1258 "C-Minus.tab.c"
+    break;
+
+  case 12: /* params: param_list  */
+#line 111 "C-Minus.y"
+                 { (yyval.node) = createParametersNode((yyvsp[0].node)); }
+#line 1264 "C-Minus.tab.c"
+    break;
+
+  case 13: /* params: VOID  */
+#line 112 "C-Minus.y"
+           { (yyval.node) = createParametersNode(NULL); }
+#line 1270 "C-Minus.tab.c"
+    break;
+
+  case 14: /* param_list: param_list COMMA param  */
+#line 116 "C-Minus.y"
+                             { (yyval.node) = (yyvsp[-2].node); addLinkToList((yyval.node), (yyvsp[0].node)); }
+#line 1276 "C-Minus.tab.c"
+    break;
+
+  case 15: /* param_list: param  */
+#line 117 "C-Minus.y"
+            { (yyval.node) = createListNode("ParametersList", (yyvsp[0].node)); }
+#line 1282 "C-Minus.tab.c"
+    break;
+
+  case 16: /* param: type_specifier ID  */
+#line 121 "C-Minus.y"
+                        { (yyval.node) = createVarDeclaration((yyvsp[-1].node), (yyvsp[0].strings), 0); }
+#line 1288 "C-Minus.tab.c"
+    break;
+
+  case 17: /* param: type_specifier ID LEFT_BRACKET RIGHT_BRACKET  */
+#line 122 "C-Minus.y"
+                                                   { (yyval.node) = createVarDeclaration((yyvsp[-3].node), (yyvsp[-2].strings), 0); }
+#line 1294 "C-Minus.tab.c"
+    break;
+
+  case 18: /* compound_stmt: LEFT_BRACE local_declarations statement_list RIGHT_BRACE  */
+#line 126 "C-Minus.y"
+                                                               { (yyval.node) = createCompoundStatement((yyvsp[-2].node), (yyvsp[-1].node)); }
+#line 1300 "C-Minus.tab.c"
+    break;
+
+  case 19: /* local_declarations: local_declarations var_declaration  */
+#line 130 "C-Minus.y"
+                                         { (yyval.node) = (yyvsp[-1].node); addLinkToList((yyval.node), (yyvsp[0].node)); }
+#line 1306 "C-Minus.tab.c"
+    break;
+
+  case 21: /* statement_list: statement_list statement  */
+#line 135 "C-Minus.y"
+                               { (yyval.node) = (yyvsp[-1].node); addLinkToList((yyval.node), (yyvsp[0].node)); }
+#line 1312 "C-Minus.tab.c"
+    break;
+
+  case 23: /* statement: expression_stmt  */
+#line 140 "C-Minus.y"
+                      { (yyval.node) = createStatementNode((yyvsp[0].node)); }
+#line 1318 "C-Minus.tab.c"
+    break;
+
+  case 24: /* statement: compound_stmt  */
+#line 141 "C-Minus.y"
+                    { (yyval.node) = createStatementNode((yyvsp[0].node)); }
+#line 1324 "C-Minus.tab.c"
+    break;
+
+  case 25: /* statement: selection_stmt  */
+#line 142 "C-Minus.y"
+                     { (yyval.node) = createStatementNode((yyvsp[0].node)); }
+#line 1330 "C-Minus.tab.c"
+    break;
+
+  case 26: /* statement: iteration_stmt  */
+#line 143 "C-Minus.y"
+                     { (yyval.node) = createStatementNode((yyvsp[0].node)); }
+#line 1336 "C-Minus.tab.c"
+    break;
+
+  case 27: /* statement: return_stmt  */
+#line 144 "C-Minus.y"
+                  { (yyval.node) = createStatementNode((yyvsp[0].node)); }
+#line 1342 "C-Minus.tab.c"
+    break;
+
+  case 28: /* expression_stmt: expression END_OF_INSTRUCTION  */
+#line 148 "C-Minus.y"
+                                    { (yyval.node) = createExpressionStatementNode((yyvsp[-1].node)); }
+#line 1348 "C-Minus.tab.c"
+    break;
+
+  case 29: /* expression_stmt: END_OF_INSTRUCTION  */
+#line 149 "C-Minus.y"
+                         { (yyval.node) = createExpressionStatementNode(NULL); }
+#line 1354 "C-Minus.tab.c"
+    break;
+
+  case 30: /* selection_stmt: IF LEFT_PARANTHESIS expression RIGHT_PARANTHESIS statement  */
+#line 153 "C-Minus.y"
+                                                                 { (yyval.node) = createSelectionStatementNode((yyvsp[-2].node), (yyvsp[0].node), NULL); }
+#line 1360 "C-Minus.tab.c"
+    break;
+
+  case 31: /* selection_stmt: IF LEFT_PARANTHESIS expression RIGHT_PARANTHESIS statement ELSE statement  */
+#line 154 "C-Minus.y"
+                                                                                { (yyval.node) = createSelectionStatementNode((yyvsp[-4].node), (yyvsp[-2].node), (yyvsp[0].node)); }
+#line 1366 "C-Minus.tab.c"
+    break;
+
+  case 32: /* iteration_stmt: WHILE LEFT_PARANTHESIS expression RIGHT_PARANTHESIS statement  */
+#line 158 "C-Minus.y"
+                                                                    { (yyval.node) = createIterationStatementNode((yyvsp[-2].node), (yyvsp[0].node)); }
+#line 1372 "C-Minus.tab.c"
+    break;
+
+  case 33: /* return_stmt: RETURN END_OF_INSTRUCTION  */
+#line 162 "C-Minus.y"
+                                { (yyval.node) = createReturnStatementNode(NULL); }
+#line 1378 "C-Minus.tab.c"
+    break;
+
+  case 34: /* return_stmt: RETURN expression END_OF_INSTRUCTION  */
+#line 163 "C-Minus.y"
+                                           { (yyval.node) = createReturnStatementNode((yyvsp[-1].node)); }
+#line 1384 "C-Minus.tab.c"
+    break;
+
+  case 35: /* expression: var ASSIGN expression  */
+#line 167 "C-Minus.y"
+                            {  addLinkToList((yyval.node), (yyvsp[-2].node)); (yyval.node) = (yyvsp[0].node);}
+#line 1390 "C-Minus.tab.c"
+    break;
+
+  case 36: /* expression: simple_expression  */
+#line 168 "C-Minus.y"
+                        { (yyval.node) = createExpressionNode((yyvsp[0].node)); }
+#line 1396 "C-Minus.tab.c"
+    break;
+
+  case 37: /* var: ID  */
+#line 172 "C-Minus.y"
+         { (yyval.node) = createVariableNode((yyvsp[0].strings), NULL); }
+#line 1402 "C-Minus.tab.c"
+    break;
+
+  case 38: /* var: ID LEFT_BRACKET expression RIGHT_BRACKET  */
+#line 173 "C-Minus.y"
+                                               { (yyval.node) = createVariableNode((yyvsp[-3].strings), (yyvsp[-1].node)); }
+#line 1408 "C-Minus.tab.c"
+    break;
+
+  case 39: /* simple_expression: additive_expression relop additive_expression  */
+#line 177 "C-Minus.y"
+                                                    { (yyval.node) = createSimpleExpressionNode((yyvsp[-2].node), (yyvsp[-1].node), (yyvsp[0].node)); }
+#line 1414 "C-Minus.tab.c"
+    break;
+
+  case 40: /* simple_expression: additive_expression  */
+#line 178 "C-Minus.y"
+                           { (yyval.node) = createSimpleExpressionNode((yyvsp[0].node), NULL, NULL); }
+#line 1420 "C-Minus.tab.c"
+    break;
+
+  case 41: /* relop: SMALLER_OR_EQUAL  */
+#line 182 "C-Minus.y"
+                       { (yyval.node) = createRelationalOperatorNode("<="); }
+#line 1426 "C-Minus.tab.c"
+    break;
+
+  case 42: /* relop: SMALLER  */
+#line 183 "C-Minus.y"
+              { (yyval.node) = createRelationalOperatorNode("<"); }
+#line 1432 "C-Minus.tab.c"
+    break;
+
+  case 43: /* relop: GREATER  */
+#line 184 "C-Minus.y"
+              { (yyval.node) = createRelationalOperatorNode(">"); }
+#line 1438 "C-Minus.tab.c"
+    break;
+
+  case 44: /* relop: GREATER_OR_EQUAL  */
+#line 185 "C-Minus.y"
+                       { (yyval.node) = createRelationalOperatorNode(">="); }
+#line 1444 "C-Minus.tab.c"
+    break;
+
+  case 45: /* relop: EQUAL  */
+#line 186 "C-Minus.y"
+            { (yyval.node) = createRelationalOperatorNode("=="); }
+#line 1450 "C-Minus.tab.c"
+    break;
+
+  case 46: /* relop: NOT_EQUAL  */
+#line 187 "C-Minus.y"
+                { (yyval.node) = createRelationalOperatorNode("!="); }
+#line 1456 "C-Minus.tab.c"
+    break;
+
+  case 47: /* additive_expression: additive_expression addop term  */
+#line 191 "C-Minus.y"
+                                     { (yyval.node) = createAdditiveExpressionNode((yyvsp[-2].node), (yyvsp[-1].node), (yyvsp[0].node)); }
+#line 1462 "C-Minus.tab.c"
+    break;
+
+  case 48: /* additive_expression: term  */
+#line 192 "C-Minus.y"
+           { (yyval.node) = (yyvsp[0].node); }
+#line 1468 "C-Minus.tab.c"
+    break;
+
+  case 49: /* addop: ADD  */
+#line 196 "C-Minus.y"
+          { (yyval.node) = createAddSubOperatorNode("+"); }
+#line 1474 "C-Minus.tab.c"
+    break;
+
+  case 50: /* addop: SUBSTRACT  */
+#line 197 "C-Minus.y"
+                { (yyval.node) = createAddSubOperatorNode("-"); }
+#line 1480 "C-Minus.tab.c"
+    break;
+
+  case 51: /* term: term mulop factor  */
+#line 201 "C-Minus.y"
+                        { (yyval.node) = createTermNode((yyvsp[-2].node), (yyvsp[-1].node), (yyvsp[0].node)); }
+#line 1486 "C-Minus.tab.c"
+    break;
+
+  case 52: /* term: factor  */
+#line 202 "C-Minus.y"
+             { (yyval.node) = (yyvsp[0].node); }
+#line 1492 "C-Minus.tab.c"
+    break;
+
+  case 53: /* mulop: MULTIPLY  */
+#line 206 "C-Minus.y"
+               { (yyval.node) = createMulDivOperatorNode("*"); }
+#line 1498 "C-Minus.tab.c"
+    break;
+
+  case 54: /* mulop: DIVIDE  */
+#line 207 "C-Minus.y"
+             { (yyval.node) = createMulDivOperatorNode("'\'"); }
+#line 1504 "C-Minus.tab.c"
+    break;
+
+  case 55: /* factor: LEFT_PARANTHESIS expression RIGHT_PARANTHESIS  */
+#line 211 "C-Minus.y"
+                                                    { (yyval.node) = createFactorNode((yyvsp[-1].node), 0); }
+#line 1510 "C-Minus.tab.c"
+    break;
+
+  case 56: /* factor: var  */
+#line 212 "C-Minus.y"
+          { (yyval.node) = createFactorNode((yyvsp[0].node), 0); }
+#line 1516 "C-Minus.tab.c"
+    break;
+
+  case 57: /* factor: call  */
+#line 213 "C-Minus.y"
+           { (yyval.node) = createFactorNode((yyvsp[0].node), 0); }
+#line 1522 "C-Minus.tab.c"
+    break;
+
+  case 58: /* factor: NUM  */
+#line 214 "C-Minus.y"
+           { (yyval.node) = createFactorNode(NULL, (yyvsp[0].intVal)); }
+#line 1528 "C-Minus.tab.c"
+    break;
+
+  case 59: /* call: ID LEFT_PARANTHESIS args RIGHT_PARANTHESIS  */
+#line 218 "C-Minus.y"
+                                                 { (yyval.node) = createCallNode((yyvsp[-3].strings), (yyvsp[-1].node)); }
+#line 1534 "C-Minus.tab.c"
+    break;
+
+  case 60: /* args: arg_list  */
+#line 222 "C-Minus.y"
+               { (yyval.node) = createArgsNode((yyvsp[0].node)); }
+#line 1540 "C-Minus.tab.c"
+    break;
+
+  case 62: /* arg_list: arg_list COMMA expression  */
+#line 227 "C-Minus.y"
+                                { (yyval.node) = (yyvsp[-2].node); addLinkToList((yyval.node), (yyvsp[0].node)); }
+#line 1546 "C-Minus.tab.c"
+    break;
+
+  case 63: /* arg_list: expression  */
+#line 228 "C-Minus.y"
+                 { (yyval.node) = createListNode("ArgumentsList", (yyvsp[0].node)); }
+#line 1552 "C-Minus.tab.c"
+    break;
+
+
+#line 1556 "C-Minus.tab.c"
 
       default: break;
     }
@@ -1387,7 +1746,7 @@ yyreturn:
   return yyresult;
 }
 
-#line 194 "C-Minus.y"
+#line 231 "C-Minus.y"
 
 
 int yyerror(char * s) 
