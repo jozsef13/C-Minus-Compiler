@@ -630,8 +630,8 @@ static const yytype_int8 yypact[] =
      means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       0,     9,    10,     0,     2,     4,     5,     0,     6,     1,
-       3,     0,     7,     0,     0,    10,     0,     0,    12,    15,
+       0,     9,    10,     0,     2,     3,     5,     0,     6,     1,
+       4,     0,     7,     0,     0,    10,     0,     0,    12,    15,
        0,    16,     0,     0,     0,     0,    20,    11,    14,     8,
       17,    22,    19,     0,     0,     0,     0,     0,     0,    29,
        0,    18,    37,    58,    24,    21,    23,    25,    26,    27,
@@ -724,7 +724,7 @@ static const yytype_int8 yyr1[] =
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     1,     2,     1,     1,     1,     3,     6,     1,
+       0,     2,     1,     1,     2,     1,     1,     3,     6,     1,
        1,     6,     1,     1,     3,     1,     2,     4,     4,     2,
        0,     2,     0,     1,     1,     1,     1,     1,     2,     1,
        5,     7,     5,     2,     3,     3,     1,     1,     4,     3,
@@ -1199,19 +1199,19 @@ yyreduce:
     {
   case 2: /* program: declaration_list  */
 #line 83 "C-Minus.y"
-                       { (yyval.node) = createProgramNode((yyvsp[0].node)); astRoot = (yyval.node); }
+                       { astRoot = createProgramNode((yyvsp[0].node)); (yyval.node) = astRoot; }
 #line 1204 "C-Minus.tab.c"
     break;
 
-  case 3: /* declaration_list: declaration_list declaration  */
+  case 3: /* declaration_list: declaration  */
 #line 87 "C-Minus.y"
-                                   { (yyval.node) = (yyvsp[-1].node); addLinkToList((yyval.node), (yyvsp[0].node)); }
+                  { (yyval.node) = createListNode("DeclarationsList", (yyvsp[0].node)); }
 #line 1210 "C-Minus.tab.c"
     break;
 
-  case 4: /* declaration_list: declaration  */
+  case 4: /* declaration_list: declaration_list declaration  */
 #line 88 "C-Minus.y"
-                  { (yyval.node) = createListNode("DeclarationsList", (yyvsp[0].node)); }
+                                   {  (yyval.node) = (yyvsp[-1].node); addLinkToList((yyvsp[-1].node), (yyvsp[0].node)); }
 #line 1216 "C-Minus.tab.c"
     break;
 
@@ -1305,254 +1305,272 @@ yyreduce:
 #line 1306 "C-Minus.tab.c"
     break;
 
+  case 20: /* local_declarations: %empty  */
+#line 131 "C-Minus.y"
+                  { (yyval.node) = createListNode("LocalDeclarations", NULL); }
+#line 1312 "C-Minus.tab.c"
+    break;
+
   case 21: /* statement_list: statement_list statement  */
 #line 135 "C-Minus.y"
                                { (yyval.node) = (yyvsp[-1].node); addLinkToList((yyval.node), (yyvsp[0].node)); }
-#line 1312 "C-Minus.tab.c"
+#line 1318 "C-Minus.tab.c"
+    break;
+
+  case 22: /* statement_list: %empty  */
+#line 136 "C-Minus.y"
+                  { (yyval.node) = createListNode("StatementList", NULL); }
+#line 1324 "C-Minus.tab.c"
     break;
 
   case 23: /* statement: expression_stmt  */
 #line 140 "C-Minus.y"
                       { (yyval.node) = createStatementNode((yyvsp[0].node)); }
-#line 1318 "C-Minus.tab.c"
+#line 1330 "C-Minus.tab.c"
     break;
 
   case 24: /* statement: compound_stmt  */
 #line 141 "C-Minus.y"
                     { (yyval.node) = createStatementNode((yyvsp[0].node)); }
-#line 1324 "C-Minus.tab.c"
+#line 1336 "C-Minus.tab.c"
     break;
 
   case 25: /* statement: selection_stmt  */
 #line 142 "C-Minus.y"
                      { (yyval.node) = createStatementNode((yyvsp[0].node)); }
-#line 1330 "C-Minus.tab.c"
+#line 1342 "C-Minus.tab.c"
     break;
 
   case 26: /* statement: iteration_stmt  */
 #line 143 "C-Minus.y"
                      { (yyval.node) = createStatementNode((yyvsp[0].node)); }
-#line 1336 "C-Minus.tab.c"
+#line 1348 "C-Minus.tab.c"
     break;
 
   case 27: /* statement: return_stmt  */
 #line 144 "C-Minus.y"
                   { (yyval.node) = createStatementNode((yyvsp[0].node)); }
-#line 1342 "C-Minus.tab.c"
+#line 1354 "C-Minus.tab.c"
     break;
 
   case 28: /* expression_stmt: expression END_OF_INSTRUCTION  */
 #line 148 "C-Minus.y"
                                     { (yyval.node) = createExpressionStatementNode((yyvsp[-1].node)); }
-#line 1348 "C-Minus.tab.c"
+#line 1360 "C-Minus.tab.c"
     break;
 
   case 29: /* expression_stmt: END_OF_INSTRUCTION  */
 #line 149 "C-Minus.y"
                          { (yyval.node) = createExpressionStatementNode(NULL); }
-#line 1354 "C-Minus.tab.c"
+#line 1366 "C-Minus.tab.c"
     break;
 
   case 30: /* selection_stmt: IF LEFT_PARANTHESIS expression RIGHT_PARANTHESIS statement  */
 #line 153 "C-Minus.y"
                                                                  { (yyval.node) = createSelectionStatementNode((yyvsp[-2].node), (yyvsp[0].node), NULL); }
-#line 1360 "C-Minus.tab.c"
+#line 1372 "C-Minus.tab.c"
     break;
 
   case 31: /* selection_stmt: IF LEFT_PARANTHESIS expression RIGHT_PARANTHESIS statement ELSE statement  */
 #line 154 "C-Minus.y"
                                                                                 { (yyval.node) = createSelectionStatementNode((yyvsp[-4].node), (yyvsp[-2].node), (yyvsp[0].node)); }
-#line 1366 "C-Minus.tab.c"
+#line 1378 "C-Minus.tab.c"
     break;
 
   case 32: /* iteration_stmt: WHILE LEFT_PARANTHESIS expression RIGHT_PARANTHESIS statement  */
 #line 158 "C-Minus.y"
                                                                     { (yyval.node) = createIterationStatementNode((yyvsp[-2].node), (yyvsp[0].node)); }
-#line 1372 "C-Minus.tab.c"
+#line 1384 "C-Minus.tab.c"
     break;
 
   case 33: /* return_stmt: RETURN END_OF_INSTRUCTION  */
 #line 162 "C-Minus.y"
                                 { (yyval.node) = createReturnStatementNode(NULL); }
-#line 1378 "C-Minus.tab.c"
+#line 1390 "C-Minus.tab.c"
     break;
 
   case 34: /* return_stmt: RETURN expression END_OF_INSTRUCTION  */
 #line 163 "C-Minus.y"
                                            { (yyval.node) = createReturnStatementNode((yyvsp[-1].node)); }
-#line 1384 "C-Minus.tab.c"
+#line 1396 "C-Minus.tab.c"
     break;
 
   case 35: /* expression: var ASSIGN expression  */
 #line 167 "C-Minus.y"
-                            {  addLinkToList((yyval.node), (yyvsp[-2].node)); (yyval.node) = (yyvsp[0].node);}
-#line 1390 "C-Minus.tab.c"
+                            { (yyval.node) = (yyvsp[0].node); addLinkToList((yyval.node), (yyvsp[-2].node)); }
+#line 1402 "C-Minus.tab.c"
     break;
 
   case 36: /* expression: simple_expression  */
 #line 168 "C-Minus.y"
                         { (yyval.node) = createExpressionNode((yyvsp[0].node)); }
-#line 1396 "C-Minus.tab.c"
+#line 1408 "C-Minus.tab.c"
     break;
 
   case 37: /* var: ID  */
 #line 172 "C-Minus.y"
          { (yyval.node) = createVariableNode((yyvsp[0].strings), NULL); }
-#line 1402 "C-Minus.tab.c"
+#line 1414 "C-Minus.tab.c"
     break;
 
   case 38: /* var: ID LEFT_BRACKET expression RIGHT_BRACKET  */
 #line 173 "C-Minus.y"
                                                { (yyval.node) = createVariableNode((yyvsp[-3].strings), (yyvsp[-1].node)); }
-#line 1408 "C-Minus.tab.c"
+#line 1420 "C-Minus.tab.c"
     break;
 
   case 39: /* simple_expression: additive_expression relop additive_expression  */
 #line 177 "C-Minus.y"
                                                     { (yyval.node) = createSimpleExpressionNode((yyvsp[-2].node), (yyvsp[-1].node), (yyvsp[0].node)); }
-#line 1414 "C-Minus.tab.c"
+#line 1426 "C-Minus.tab.c"
     break;
 
   case 40: /* simple_expression: additive_expression  */
 #line 178 "C-Minus.y"
                            { (yyval.node) = createSimpleExpressionNode((yyvsp[0].node), NULL, NULL); }
-#line 1420 "C-Minus.tab.c"
+#line 1432 "C-Minus.tab.c"
     break;
 
   case 41: /* relop: SMALLER_OR_EQUAL  */
 #line 182 "C-Minus.y"
                        { (yyval.node) = createRelationalOperatorNode("<="); }
-#line 1426 "C-Minus.tab.c"
+#line 1438 "C-Minus.tab.c"
     break;
 
   case 42: /* relop: SMALLER  */
 #line 183 "C-Minus.y"
               { (yyval.node) = createRelationalOperatorNode("<"); }
-#line 1432 "C-Minus.tab.c"
+#line 1444 "C-Minus.tab.c"
     break;
 
   case 43: /* relop: GREATER  */
 #line 184 "C-Minus.y"
               { (yyval.node) = createRelationalOperatorNode(">"); }
-#line 1438 "C-Minus.tab.c"
+#line 1450 "C-Minus.tab.c"
     break;
 
   case 44: /* relop: GREATER_OR_EQUAL  */
 #line 185 "C-Minus.y"
                        { (yyval.node) = createRelationalOperatorNode(">="); }
-#line 1444 "C-Minus.tab.c"
+#line 1456 "C-Minus.tab.c"
     break;
 
   case 45: /* relop: EQUAL  */
 #line 186 "C-Minus.y"
             { (yyval.node) = createRelationalOperatorNode("=="); }
-#line 1450 "C-Minus.tab.c"
+#line 1462 "C-Minus.tab.c"
     break;
 
   case 46: /* relop: NOT_EQUAL  */
 #line 187 "C-Minus.y"
                 { (yyval.node) = createRelationalOperatorNode("!="); }
-#line 1456 "C-Minus.tab.c"
+#line 1468 "C-Minus.tab.c"
     break;
 
   case 47: /* additive_expression: additive_expression addop term  */
 #line 191 "C-Minus.y"
                                      { (yyval.node) = createAdditiveExpressionNode((yyvsp[-2].node), (yyvsp[-1].node), (yyvsp[0].node)); }
-#line 1462 "C-Minus.tab.c"
+#line 1474 "C-Minus.tab.c"
     break;
 
   case 48: /* additive_expression: term  */
 #line 192 "C-Minus.y"
            { (yyval.node) = (yyvsp[0].node); }
-#line 1468 "C-Minus.tab.c"
+#line 1480 "C-Minus.tab.c"
     break;
 
   case 49: /* addop: ADD  */
 #line 196 "C-Minus.y"
           { (yyval.node) = createAddSubOperatorNode("+"); }
-#line 1474 "C-Minus.tab.c"
+#line 1486 "C-Minus.tab.c"
     break;
 
   case 50: /* addop: SUBSTRACT  */
 #line 197 "C-Minus.y"
                 { (yyval.node) = createAddSubOperatorNode("-"); }
-#line 1480 "C-Minus.tab.c"
+#line 1492 "C-Minus.tab.c"
     break;
 
   case 51: /* term: term mulop factor  */
 #line 201 "C-Minus.y"
                         { (yyval.node) = createTermNode((yyvsp[-2].node), (yyvsp[-1].node), (yyvsp[0].node)); }
-#line 1486 "C-Minus.tab.c"
+#line 1498 "C-Minus.tab.c"
     break;
 
   case 52: /* term: factor  */
 #line 202 "C-Minus.y"
              { (yyval.node) = (yyvsp[0].node); }
-#line 1492 "C-Minus.tab.c"
+#line 1504 "C-Minus.tab.c"
     break;
 
   case 53: /* mulop: MULTIPLY  */
 #line 206 "C-Minus.y"
                { (yyval.node) = createMulDivOperatorNode("*"); }
-#line 1498 "C-Minus.tab.c"
+#line 1510 "C-Minus.tab.c"
     break;
 
   case 54: /* mulop: DIVIDE  */
 #line 207 "C-Minus.y"
-             { (yyval.node) = createMulDivOperatorNode("'\'"); }
-#line 1504 "C-Minus.tab.c"
+             { (yyval.node) = createMulDivOperatorNode("/"); }
+#line 1516 "C-Minus.tab.c"
     break;
 
   case 55: /* factor: LEFT_PARANTHESIS expression RIGHT_PARANTHESIS  */
 #line 211 "C-Minus.y"
                                                     { (yyval.node) = createFactorNode((yyvsp[-1].node), 0); }
-#line 1510 "C-Minus.tab.c"
+#line 1522 "C-Minus.tab.c"
     break;
 
   case 56: /* factor: var  */
 #line 212 "C-Minus.y"
           { (yyval.node) = createFactorNode((yyvsp[0].node), 0); }
-#line 1516 "C-Minus.tab.c"
+#line 1528 "C-Minus.tab.c"
     break;
 
   case 57: /* factor: call  */
 #line 213 "C-Minus.y"
            { (yyval.node) = createFactorNode((yyvsp[0].node), 0); }
-#line 1522 "C-Minus.tab.c"
+#line 1534 "C-Minus.tab.c"
     break;
 
   case 58: /* factor: NUM  */
 #line 214 "C-Minus.y"
            { (yyval.node) = createFactorNode(NULL, (yyvsp[0].intVal)); }
-#line 1528 "C-Minus.tab.c"
+#line 1540 "C-Minus.tab.c"
     break;
 
   case 59: /* call: ID LEFT_PARANTHESIS args RIGHT_PARANTHESIS  */
 #line 218 "C-Minus.y"
                                                  { (yyval.node) = createCallNode((yyvsp[-3].strings), (yyvsp[-1].node)); }
-#line 1534 "C-Minus.tab.c"
+#line 1546 "C-Minus.tab.c"
     break;
 
   case 60: /* args: arg_list  */
 #line 222 "C-Minus.y"
                { (yyval.node) = createArgsNode((yyvsp[0].node)); }
-#line 1540 "C-Minus.tab.c"
+#line 1552 "C-Minus.tab.c"
+    break;
+
+  case 61: /* args: %empty  */
+#line 223 "C-Minus.y"
+                  { (yyval.node) = NULL; }
+#line 1558 "C-Minus.tab.c"
     break;
 
   case 62: /* arg_list: arg_list COMMA expression  */
 #line 227 "C-Minus.y"
                                 { (yyval.node) = (yyvsp[-2].node); addLinkToList((yyval.node), (yyvsp[0].node)); }
-#line 1546 "C-Minus.tab.c"
+#line 1564 "C-Minus.tab.c"
     break;
 
   case 63: /* arg_list: expression  */
 #line 228 "C-Minus.y"
                  { (yyval.node) = createListNode("ArgumentsList", (yyvsp[0].node)); }
-#line 1552 "C-Minus.tab.c"
+#line 1570 "C-Minus.tab.c"
     break;
 
 
-#line 1556 "C-Minus.tab.c"
+#line 1574 "C-Minus.tab.c"
 
       default: break;
     }

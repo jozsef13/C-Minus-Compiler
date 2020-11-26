@@ -7,8 +7,8 @@ IS			(u|U|l|L)*
 
 %{
 #include <stdio.h>
-#include "C-Minus.tab.h"
 #include "ast.h"
+#include "C-Minus.tab.h"
 
 void count();
 void error();

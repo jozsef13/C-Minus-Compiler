@@ -1,8 +1,8 @@
 #ifndef __AST_H
 #define __AST_H
 
-#define MAX_NODE_TYPE 100
-#define MAX_EXTRA_DATA 100
+#define MAX_NODE_TYPE 1000
+#define MAX_EXTRA_DATA 1000
 
 typedef struct node {
 	char type[MAX_NODE_TYPE];

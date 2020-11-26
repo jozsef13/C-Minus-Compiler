@@ -6,6 +6,7 @@
 Node* createDefaultNode(const char* nodeName, unsigned int linksCount)
 {
 	Node* retNode = (Node*)malloc(sizeof(Node));
+	int i;
 	if (retNode)
 	{
 		memset(retNode, 0, sizeof(Node));
@@ -17,6 +18,10 @@ Node* createDefaultNode(const char* nodeName, unsigned int linksCount)
 		if (linksCount > 0)
 		{
 			retNode->links = (Node**)malloc(linksCount * sizeof(Node*));
+		}
+		for (i = 0; i < linksCount; i++)
+		{
+			retNode->links[i] = NULL;
 		}
 	}
 	return retNode;
@@ -81,8 +86,12 @@ Node* createVarDeclaration(Node* typeSpecifier, const char* varName, int value)
 		retNode->links[0] = typeSpecifier;
 		if (varName)
 			sprintf(retNode->extraData, "%s", varName);
-		retNode->links[1] = createDefaultNode("Num", 0);
-		sprintf(retNode->links[1]->extraData, "%d", value);
+
+		if (value > 0)
+		{
+			retNode->links[1] = createDefaultNode("Num", 0);
+			sprintf(retNode->links[1]->extraData, "%d", value);
+		}
 	}
 
 	return retNode;

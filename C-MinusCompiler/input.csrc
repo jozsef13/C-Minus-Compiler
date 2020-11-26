@@ -4,23 +4,14 @@ int gcd ( int u, int v )
 		return u ;
 	else
 		return gcd (v, u-u/v*v) ;
-	/* u-u/v*v == u mod v */
-}
-
-int max (int u, int v)
-{
-	if(u > v)
-		return u;
-	else
-		return v;
 }
 
 void main(void)
 {
 	int x;
 	int y;
+	int z;
 	x = input();
 	y = input();
 	output(gcd(x,y));
-	output(max(x,y));
 }

@@ -80,12 +80,12 @@
 %start program
 %%
 program 
-    : declaration_list { $$ = createProgramNode($1); astRoot = $$; }
+    : declaration_list { astRoot = createProgramNode($1); $$ = astRoot; }
     ;
 
 declaration_list 
-    : declaration_list declaration { $$ = $1; addLinkToList($$, $2); }
-    | declaration { $$ = createListNode("DeclarationsList", $1); }
+    : declaration { $$ = createListNode("DeclarationsList", $1); }
+    | declaration_list declaration {  $$ = $1; addLinkToList($1, $2); }
     ;
 
 declaration
@@ -128,12 +128,12 @@ compound_stmt
 
 local_declarations
     : local_declarations var_declaration { $$ = $1; addLinkToList($$, $2); }
-    | /* empty */
+    | /* empty */ { $$ = createListNode("LocalDeclarations", NULL); }
     ;
 
 statement_list
     : statement_list statement { $$ = $1; addLinkToList($$, $2); }
-    | /* empty */
+    | /* empty */ { $$ = createListNode("StatementList", NULL); }
     ;
 
 statement 
@@ -164,7 +164,7 @@ return_stmt
     ;
 
 expression
-    : var ASSIGN expression {  addLinkToList($$, $1); $$ = $3;} 
+    : var ASSIGN expression { $$ = $3; addLinkToList($$, $1); } 
     | simple_expression { $$ = createExpressionNode($1); }
     ;
 
@@ -204,7 +204,7 @@ term
 
 mulop
     : MULTIPLY { $$ = createMulDivOperatorNode("*"); }
-    | DIVIDE { $$ = createMulDivOperatorNode("'\'"); }
+    | DIVIDE { $$ = createMulDivOperatorNode("/"); }
     ;
 
 factor
@@ -220,7 +220,7 @@ call
 
 args
     : arg_list { $$ = createArgsNode($1); }
-    | /* empty */
+    | /* empty */ { $$ = NULL; }
     ;
 
 arg_list
