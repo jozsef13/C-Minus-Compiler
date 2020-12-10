@@ -80,7 +80,6 @@ Node* createDeclarationNode(Node* varFunDeclaration)
 Node* createVarDeclaration(Node* typeSpecifier, const char* varName, int value)
 {
 	Node* retNode = createDefaultNode("VariableDeclaration", 2);
-
 	if (retNode)
 	{
 		retNode->links[0] = typeSpecifier;
@@ -304,7 +303,6 @@ void printAst(Node* ast, int level)
 		}
 		for (idx = 0; idx < ast->numLinks; idx++)
 		{
-
 			printAst(ast->links[idx], level + 1);
 		}
 	}

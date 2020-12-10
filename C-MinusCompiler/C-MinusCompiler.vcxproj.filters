@@ -27,12 +27,18 @@
     <ClCompile Include="ast.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SymbolsTable.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C-Minus.tab.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ast.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SymbolsTable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

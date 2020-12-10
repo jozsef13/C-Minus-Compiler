@@ -151,10 +151,12 @@
     <ClCompile Include="C-Minus.tab.c" />
     <ClCompile Include="C-MinusCompiler.c" />
     <ClCompile Include="lex.yy.c" />
+    <ClCompile Include="SymbolsTable.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ast.h" />
     <ClInclude Include="C-Minus.tab.h" />
+    <ClInclude Include="SymbolsTable.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="C-Minus.lex" />

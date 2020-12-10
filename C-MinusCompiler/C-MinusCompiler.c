@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "ast.h"
+#include "SymbolsTable.h"
 
 extern int yyparse(void);
 extern FILE* yyin;
@@ -30,7 +31,11 @@ int main()
 		default:
 			break;
 		}
+		printf("\n---------------------- The syntax tree ------------------");
 		printAst(astRoot, 0);
+		initHashTable();
+		generateSymbolsTable(astRoot, 0, astRoot);
+		printSymbolsTable();
 		fclose(yyin);
 	}
 	else
