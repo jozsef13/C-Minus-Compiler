@@ -15,8 +15,7 @@ void initHashTable()
 
 void insert(char* name, char* type, SymbolType symbolType, IdentifierScope scope, char* context)
 {
-	unsigned int hashValue = indexValue;
-	SymTableEntry* list = hashTable[hashValue];
+	SymTableEntry* list = hashTable[indexValue];
 
 	list = (SymTableEntry*)malloc(sizeof(SymTableEntry));
 	sprintf(list->symbolName, "%s", name);
@@ -24,8 +23,8 @@ void insert(char* name, char* type, SymbolType symbolType, IdentifierScope scope
 	list->symbolScope = scope;
 	sprintf(list->dataType, "%s", type);
 	sprintf(list->contextName, "%s", context);
-	list->next = hashTable[hashValue];
-	hashTable[hashValue] = list;
+	list->next = hashTable[indexValue];
+	hashTable[indexValue] = list;
 	indexValue++;
 }
 
@@ -88,7 +87,7 @@ void generateSymbolsTable(Node* astRoot, int level, Node* parent)
 					break;
 				}
 			}
-			insert(astRoot->extraData, type, Function, Global, localParent->type);
+			insert(astRoot->extraData, type, Function, Global, astRoot->type);
 		}
 
 		if (strcmp(astRoot->type, "VariableDeclaration") == 0)
@@ -104,16 +103,16 @@ void generateSymbolsTable(Node* astRoot, int level, Node* parent)
 				}
 			}
 
-			if (strcmp(parent->type, "Declaration") && level <= 4)
+			if (strcmp(localParent->type, "Declaration") && level <= 4)
 			{
 				scope = Global;
 			}
 
-			if (strcmp(parent->type, "ParametersList") == 0)
+			if (strcmp(localParent->type, "ParametersList") == 0)
 			{
 				symType = Parameter;
 			}
-			insert(astRoot->extraData, type, symType, scope, localParent->type);
+			insert(astRoot->extraData, type, symType, scope, astRoot->type);
 		}
 		for (idx = 0; idx < astRoot->numLinks; idx++)
 		{
